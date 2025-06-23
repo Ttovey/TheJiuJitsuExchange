@@ -1,4 +1,4 @@
-# Exchange App - Full Stack Authentication
+# Exchange App - Full Stack Gym Management System
 
 A complete full-stack web application with Python Flask backend, SQLite database, and React TypeScript frontend featuring user authentication.
 

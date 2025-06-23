@@ -692,6 +692,22 @@ body {
   background-color: #004085;
 }
 
+.dashboard-item:hover {
+  background-color: #667eea;
+}
+
+.profile-item:hover {
+  background-color: #2c5aa0;
+}
+
+.settings-item:hover {
+  background-color: #5a6268;
+}
+
+.membership-item:hover {
+  background-color: #667eea;
+}
+
 .user-greeting {
   padding: 0.75rem 1rem;
   color: #cccccc;
@@ -779,6 +795,47 @@ body {
   margin-bottom: 0.75rem;
   font-size: 0.85rem;
   text-align: center;
+}
+
+/* Dropdown Navigation Styles */
+.dropdown-nav-section {
+  border-bottom: 1px solid #444;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.dropdown-item.nav-item {
+  color: #cccccc;
+  font-size: 0.95rem;
+  padding: 0.6rem 1rem;
+  position: relative;
+}
+
+.dropdown-item.nav-item:hover {
+  background-color: #3a3a3a;
+  color: #667eea;
+}
+
+.dropdown-item.nav-item.active {
+  background-color: #444;
+  color: #667eea;
+  font-weight: 500;
+}
+
+.dropdown-item.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #667eea;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: #444;
+  margin: 0.5rem 0;
 }
 
 /* Dog Coach Section */
@@ -1252,7 +1309,7 @@ body {
 }
 
 .faq-answer-content {
-  padding: 0 2rem 1.5rem;
+  padding: 1.5rem 2rem 1.5rem;
   color: #cccccc;
   line-height: 1.6;
 }
@@ -1288,7 +1345,7 @@ body {
   }
   
   .faq-answer-content {
-    padding: 0 1.5rem 1.25rem;
+    padding: 1.25rem 1.5rem 1.25rem;
   }
   
   .faq-icon {
@@ -1415,4 +1472,163 @@ body {
     font-size: 1rem;
     padding: 0.6rem 1.2rem;
   }
-} 
+}
+
+/* Profile Page Styles */
+.profile-page {
+  min-height: 100vh;
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.profile-title {
+  color: #667eea;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.profile-content {
+  display: grid;
+  gap: 2rem;
+}
+
+.profile-section {
+  background: #2a2a2a;
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid #444;
+}
+
+.profile-section h2 {
+  color: #667eea;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #444;
+  padding-bottom: 0.5rem;
+}
+
+.profile-info p {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.profile-info strong {
+  color: #cccccc;
+}
+
+.back-button {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-bottom: 2rem;
+}
+
+.back-button:hover {
+  background: #5a6fd8;
+  transform: translateY(-1px);
+}
+
+/* Settings Page Styles */
+.settings-page {
+  min-height: 100vh;
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+.settings-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.settings-title {
+  color: #667eea;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.settings-content {
+  display: grid;
+  gap: 2rem;
+}
+
+.settings-section {
+  background: #2a2a2a;
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid #444;
+}
+
+.settings-section h2 {
+  color: #667eea;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #444;
+  padding-bottom: 0.5rem;
+}
+
+.settings-group p {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #cccccc;
+}
+
+.settings-group em {
+  color: #888;
+  font-style: italic;
+}
+
+/* Responsive Design for Profile and Settings */
+@media (max-width: 768px) {
+  .profile-container,
+  .settings-container {
+    padding: 1rem;
+  }
+  
+  .profile-title,
+  .settings-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .profile-section,
+  .settings-section {
+    padding: 1.5rem;
+  }
+  
+  .profile-section h2,
+  .settings-section h2 {
+    font-size: 1.3rem;
+  }
+  
+  .back-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Spinner animation for loading states */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

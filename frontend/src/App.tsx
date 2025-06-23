@@ -3,6 +3,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './components/Login';
 import Register from './components/Register';
 import Landing from './components/Landing';
+import Dashboard from './components/Dashboard';
+import Profile from './components/Profile';
+import Settings from './components/Settings';
+import MembershipSuccess from './components/MembershipSuccess';
+import MembershipCancel from './components/MembershipCancel';
 import { User } from './types';
 
 const App: React.FC = () => {
@@ -58,7 +63,27 @@ const App: React.FC = () => {
           />
           <Route 
             path="/dashboard" 
+            element={<Dashboard user={user} setUser={setUser} />} 
+          />
+          <Route 
+            path="/landing" 
             element={<Landing user={user} setUser={setUser} />} 
+          />
+          <Route 
+            path="/profile" 
+            element={<Profile user={user} setUser={setUser} />} 
+          />
+          <Route 
+            path="/settings" 
+            element={<Settings user={user} setUser={setUser} />} 
+          />
+          <Route 
+            path="/membership/success" 
+            element={<MembershipSuccess user={user} setUser={setUser} />} 
+          />
+          <Route 
+            path="/membership/cancel" 
+            element={<MembershipCancel user={user} setUser={setUser} />} 
           />
           <Route 
             path="/" 
