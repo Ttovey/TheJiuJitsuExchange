@@ -6,10 +6,9 @@ import logo from '../assets/images/logo.png';
 interface NavbarProps {
   user: User | null;
   setUser: (user: User | null) => void;
-  showNavLinks?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ user, setUser, showNavLinks = false }) => {
+const Navbar: React.FC<NavbarProps> = ({ user, setUser }) => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [showLoginForm, setShowLoginForm] = useState<boolean>(false);
@@ -19,17 +18,6 @@ const Navbar: React.FC<NavbarProps> = ({ user, setUser, showNavLinks = false }) 
   });
   const [loginError, setLoginError] = useState<string>('');
   const [loginLoading, setLoginLoading] = useState<boolean>(false);
-
-  // Navigation sections for the landing page
-  const sections = [
-    { id: 'welcome', name: 'Welcome' },
-    { id: 'coaches', name: 'Coaches' },
-    { id: 'reginald', name: 'Reginald' },
-    { id: 'schedule', name: 'Schedule' },
-    { id: 'gym', name: 'The Gym' },
-    { id: 'faq', name: 'FAQ' },
-    { id: 'contact', name: 'Contact' }
-  ];
 
   const handleLogout = async (): Promise<void> => {
     try {
@@ -103,21 +91,6 @@ const Navbar: React.FC<NavbarProps> = ({ user, setUser, showNavLinks = false }) 
     setIsMenuOpen(false);
   };
 
-  const handleNavClick = (sectionId: string): void => {
-    navigate('/landing');
-    setIsMenuOpen(false);
-    // Small delay to allow navigation to complete before scrolling
-    setTimeout(() => {
-      const element = document.querySelector(`[data-section="${sectionId}"]`);
-      if (element) {
-        element.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    }, 100);
-  };
-
   const handleDashboardClick = (): void => {
     navigate('/dashboard');
     setIsMenuOpen(false);
@@ -128,18 +101,13 @@ const Navbar: React.FC<NavbarProps> = ({ user, setUser, showNavLinks = false }) 
     setIsMenuOpen(false);
   };
 
-  const handleSettingsClick = (): void => {
-    navigate('/settings');
-    setIsMenuOpen(false);
-  };
-
   const handleMembershipClick = (): void => {
     navigate('/membership');
     setIsMenuOpen(false);
   };
 
   const handleHomeClick = (): void => {
-    navigate('/landing');
+    navigate('/dashboard');
     setIsMenuOpen(false);
   };
 
@@ -164,39 +132,6 @@ const Navbar: React.FC<NavbarProps> = ({ user, setUser, showNavLinks = false }) 
         
         {isMenuOpen && (
           <div className="dropdown-menu">
-            {/* Navigation Links - only show on landing page */}
-            {showNavLinks && (
-              <>
-                <div className="dropdown-nav-section">
-                  {sections.map((section) => (
-                    <button
-                      key={section.id}
-                      className="dropdown-item nav-item"
-                      onClick={() => handleNavClick(section.id)}
-                    >
-                      {section.name}
-                    </button>
-                  ))}
-                </div>
-                
-                {/* Divider */}
-                <div className="dropdown-divider"></div>
-              </>
-            )}
-            
-            {/* Home Link - only show on non-landing pages */}
-            {!showNavLinks && (
-              <>
-                <button
-                  className="dropdown-item nav-item"
-                  onClick={handleHomeClick}
-                >
-                  🏠 Home
-                </button>
-                <div className="dropdown-divider"></div>
-              </>
-            )}
-            
             {/* Authentication Section */}
             {user ? (
               <>
@@ -207,19 +142,13 @@ const Navbar: React.FC<NavbarProps> = ({ user, setUser, showNavLinks = false }) 
                   onClick={handleDashboardClick} 
                   className="dropdown-item dashboard-item"
                 >
-                  My Dashboard
+                  Dashboard
                 </button>
                 <button 
                   onClick={handleProfileClick} 
                   className="dropdown-item profile-item"
                 >
-                  My Profile
-                </button>
-                <button 
-                  onClick={handleSettingsClick} 
-                  className="dropdown-item settings-item"
-                >
-                  Settings
+                  Profile
                 </button>
                 <button 
                   onClick={handleLogout} 

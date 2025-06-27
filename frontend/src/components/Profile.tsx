@@ -183,7 +183,7 @@ const Profile: React.FC<ProfileProps> = ({ user, setUser }) => {
       <Navbar user={user} setUser={setUser} />
       <div className="profile-container">
         
-        <h1 className="profile-title">My Profile</h1>
+        <h1 className="profile-title">Profile</h1>
         
         <div className="profile-content">
           <div className="profile-section">

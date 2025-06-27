@@ -72,19 +72,6 @@ const MembershipSuccess: React.FC<MembershipSuccessProps> = ({ user, setUser }) 
         
         <div style={{ marginTop: '30px' }}>
           <Link 
-            to="/membership" 
-            style={{
-              backgroundColor: '#007bff',
-              color: 'white',
-              padding: '10px 20px',
-              textDecoration: 'none',
-              borderRadius: '4px',
-              marginRight: '10px'
-            }}
-          >
-            View Membership
-          </Link>
-          <Link 
             to="/dashboard" 
             style={{
               backgroundColor: '#6c757d',

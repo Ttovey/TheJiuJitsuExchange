@@ -34,8 +34,7 @@ exchangeApp/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── Login.tsx   # Login component
-│   │   │   ├── Register.tsx # Registration component
-│   │   │   └── Landing.tsx # Dashboard component
+│   │   │   └── Register.tsx # Registration component
 │   │   ├── types/
 │   │   │   └── index.ts    # TypeScript type definitions
 │   │   ├── App.tsx         # Main app with routing
