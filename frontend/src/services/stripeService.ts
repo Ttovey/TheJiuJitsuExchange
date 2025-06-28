@@ -15,7 +15,14 @@ export const stripeService = {
     });
     
     if (!response.ok) {
-      throw new Error('Failed to get Stripe configuration');
+      let errorMessage = 'Failed to get Stripe configuration';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorMessage;
+      } catch (jsonError) {
+        // JSON parsing failed, use default message
+      }
+      throw new Error(errorMessage);
     }
     
     return response.json();
@@ -28,7 +35,14 @@ export const stripeService = {
     });
     
     if (!response.ok) {
-      throw new Error('Failed to get membership plans');
+      let errorMessage = 'Failed to get membership plans';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorMessage;
+      } catch (jsonError) {
+        // JSON parsing failed, use default message
+      }
+      throw new Error(errorMessage);
     }
     
     return response.json();
@@ -41,7 +55,14 @@ export const stripeService = {
     });
     
     if (!response.ok) {
-      throw new Error('Failed to get membership status');
+      let errorMessage = 'Request failed';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorMessage;
+      } catch (jsonError) {
+        // JSON parsing failed, use default message
+      }
+      throw new Error(errorMessage);
     }
     
     return response.json();
@@ -59,8 +80,14 @@ export const stripeService = {
     });
     
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to create checkout session');
+      let errorMessage = 'Failed to create checkout session';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorMessage;
+      } catch (jsonError) {
+        // JSON parsing failed, use default message
+      }
+      throw new Error(errorMessage);
     }
     
     return response.json();
@@ -74,8 +101,14 @@ export const stripeService = {
     });
     
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to cancel membership');
+      let errorMessage = 'Failed to cancel membership';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorMessage;
+      } catch (jsonError) {
+        // JSON parsing failed, use default message
+      }
+      throw new Error(errorMessage);
     }
     
     return response.json();
@@ -93,8 +126,14 @@ export const stripeService = {
     });
     
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to verify payment');
+      let errorMessage = 'Failed to verify payment';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorMessage;
+      } catch (jsonError) {
+        // JSON parsing failed, use default message
+      }
+      throw new Error(errorMessage);
     }
     
     return response.json();

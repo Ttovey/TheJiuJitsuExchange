@@ -22,6 +22,12 @@ def register():
         if not username or not email or not password:
             return jsonify({'error': 'Username, email and password are required'}), 400
         
+        # Basic email validation
+        import re
+        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        if not re.match(email_pattern, email):
+            return jsonify({'error': 'Invalid email format'}), 400
+        
         if len(password) < 6:
             return jsonify({'error': 'Password must be at least 6 characters long'}), 400
         
@@ -91,21 +97,70 @@ def logout():
     session.clear()
     return jsonify({'message': 'Logged out successfully'}), 200
 
-@auth_bp.route('/user', methods=['GET'])
-def get_current_user():
-    """Get current user information"""
+@auth_bp.route('/check', methods=['GET'])
+def check_auth():
+    """Check if user is authenticated"""
+    if 'user_id' in session:
+        user = db.session.get(User, session['user_id'])
+        if user:
+            return jsonify({
+                'authenticated': True,
+                'user': user.to_dict()
+            }), 200
+    
+    return jsonify({'authenticated': False}), 200
+
+@auth_bp.route('/user', methods=['GET', 'PUT'])
+def user_profile():
+    """Get or update current user information"""
     if 'user_id' not in session:
         return jsonify({'error': 'Not authenticated'}), 401
     
-    # Find user by ID
-    user = User.query.get(session['user_id'])
+    user = db.session.get(User, session['user_id'])
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
     
-    if user:
+    if request.method == 'GET':
         return jsonify({
             'user': user.to_dict()
         }), 200
-    else:
-        return jsonify({'error': 'User not found'}), 404
+    
+    elif request.method == 'PUT':
+        try:
+            data = request.get_json()
+            if not data:
+                return jsonify({'error': 'No data provided'}), 400
+            
+            # Update allowed fields
+            if 'email' in data:
+                # Check if email is already taken by another user
+                existing_user = User.query.filter(
+                    User.email == data['email'],
+                    User.id != user.id
+                ).first()
+                if existing_user:
+                    return jsonify({'error': 'Email already exists'}), 409
+                user.email = data['email']
+            
+            if 'profile_picture' in data:
+                user.profile_picture = data['profile_picture']
+            
+            if 'first_name' in data:
+                user.first_name = data['first_name']
+            
+            if 'last_name' in data:
+                user.last_name = data['last_name']
+            
+            db.session.commit()
+            
+            return jsonify({
+                'message': 'Profile updated successfully',
+                'user': user.to_dict()
+            }), 200
+            
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
 
 # Profile picture configuration
 UPLOAD_FOLDER = 'uploads/profile_pictures'
@@ -143,7 +198,7 @@ def upload_profile_picture():
             file.save(file_path)
             
             # Update user profile picture in database
-            user = User.query.get(session['user_id'])
+            user = db.session.get(User, session['user_id'])
             if user:
                 # Delete old profile picture if exists
                 if user.profile_picture:
@@ -183,7 +238,7 @@ def delete_profile_picture():
         return jsonify({'error': 'Not authenticated'}), 401
     
     try:
-        user = User.query.get(session['user_id'])
+        user = db.session.get(User, session['user_id'])
         if user and user.profile_picture:
             # Delete file from filesystem
             upload_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), UPLOAD_FOLDER)

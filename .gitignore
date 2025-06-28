@@ -242,3 +242,28 @@ uploads/
 # Flask-Migrate (optional - some people commit these, some don't)
 # migrations/
 dmypy.json 
+
+# Test files
+TESTING.md
+
+# Python testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+pytest_cache/
+
+# JavaScript/React testing  
+jest_cache/
+.jest/
+
+# Test reports and artifacts
+test-results/
+test-report.xml
+junit.xml
+coverage.xml
+
+# Playwright (if you add e2e testing)
+test-results/
+playwright-report/
+playwright/.cache/
