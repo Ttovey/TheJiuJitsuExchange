@@ -34,13 +34,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
-    - name: Set up test environment
-      run: |
-        cd backend
-        export FLASK_APP=app.py
-        export FLASK_ENV=testing
-    
     - name: Run backend tests with coverage
+      env:
+        FLASK_APP: app.py
+        FLASK_ENV: testing
+        STRIPE_SECRET_KEY: sk_test_fake_key_for_testing_only
+        STRIPE_PUBLISHABLE_KEY: pk_test_fake_key_for_testing_only
+        DATABASE_URL: sqlite:///test.db
+        SECRET_KEY: test_secret_key_for_github_actions
       run: |
         cd backend
         python -m pytest -v --cov=. --cov-report=xml --cov-report=term-missing
@@ -64,8 +65,14 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: frontend/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
     
     - name: Install frontend dependencies
       run: |
